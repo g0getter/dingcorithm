@@ -25,10 +25,6 @@ def dfs_recursion(adjacent_graph, cur_node, visited_array):
     for adjacent_node in adjacent_graph[cur_node]:
         if adjacent_node not in visited_array: # 탐색할 것
             dfs_recursion(adjacent_graph, adjacent_node, visited_array)
-        else: # 이미 방문한 것 - 넘어감
-            continue
-
-    return
 
 
 dfs_recursion(graph, 1, visited)  # 1 이 시작노드입니다!
