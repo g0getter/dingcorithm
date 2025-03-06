@@ -1,17 +1,18 @@
 import sys
+from collections import deque
 
 def solution(array):
     land_count = 0
 
     def bfs(start_x, start_y):
-        queue_indices_to_visit = []
+        queue_indices_to_visit = deque([])
+        # queue_indices_to_visit = []
 
         queue_indices_to_visit.append((i, j))
-        # print(indices_to_visit)
 
         while len(queue_indices_to_visit) != 0:
             # 꺼내고
-            x, y = queue_indices_to_visit.pop(0)
+            x, y = queue_indices_to_visit.popleft() # 속도 O(1). list의 pop(0)는 O(N)
             # 방문하고
             array[x][y] = 2  # visited
             # 다 넣고.
