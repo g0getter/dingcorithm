@@ -2,40 +2,48 @@ import sys
 
 def solution(array):
     land_count = 0
-    indices_to_visit = []
+
+    def bfs(start_x, start_y):
+        queue_indices_to_visit = []
+
+        queue_indices_to_visit.append((i, j))
+        # print(indices_to_visit)
+
+        while len(queue_indices_to_visit) != 0:
+            # 꺼내고
+            x, y = queue_indices_to_visit.pop(0)
+            # 방문하고
+            array[x][y] = 2  # visited
+            # 다 넣고.
+            queue_indices_to_visit = enqueue_eight_sides(array, queue_indices_to_visit, x, y)
+            # print(f"enqueue_eight_sides {x, y} 반환값: {indices_to_visit}")
+
     for i in range(len(array)):
         for j in range(len(array[0])):
             if array[i][j] == 1: # land
                 land_count += 1
-                indices_to_visit.append((i,j))
-                # print(indices_to_visit)
 
-                while len(indices_to_visit) != 0:
-                    # 꺼내고
-                    x, y = indices_to_visit.pop(0)
-                    # 방문하고
-                    array[x][y] = 2  # visited
-                    # 다 넣고.
-                    indices_to_visit = enqueue_eight_sides(array, indices_to_visit, x, y)
-                    # print(f"enqueue_eight_sides {x, y} 반환값: {indices_to_visit}")
+                bfs(i, j)
 
     return land_count
 
-# i, j 기준 8칸 탐색, visited==1 이면 enqueue
-def enqueue_eight_sides(array, indices_to_visit, i, j):
-    new_indices_to_visit = indices_to_visit
 
-    sides = get_valid_eight_sides(i,j, len(array), len(array[0]))
-    if sides is None: return indices_to_visit
+
+# i, j 기준 8칸 중 'visited == 1인 것만' enqueue
+def enqueue_eight_sides(array, queue, i, j):
+    new_queue = queue
+
+    sides = get_valid_eight_sides(i, j, len(array), len(array[0]))
+    if sides is None: return queue
 
     for i, j in sides:
-        if array[i][j] == 1 and (i, j) not in indices_to_visit:
-            new_indices_to_visit.append((i, j))
-    return new_indices_to_visit
+        if array[i][j] == 1 and (i, j) not in queue:
+            new_queue.append((i, j))
+    return new_queue
 
-# returns eight sides not exceeding each length
+# i, j 기준 모든 8칸 탐색, '길이 넘지 않는 선에서' valid 값만 반환(returns eight sides not exceeding each length)
 def get_valid_eight_sides(i, j, len_m, len_n):
-    dd = [
+    directions = [
         (-1,-1),
         (-1, 0),
         (-1,+1),
@@ -47,9 +55,8 @@ def get_valid_eight_sides(i, j, len_m, len_n):
      ]
 
     result = []
-    for d in dd:
-        x = i+d[0]
-        y = j+d[1]
+    for dx, dy in directions:
+        x, y = i+dx, j+dy
         if len_m > x >= 0 and 0 <= y < len_n:
             result.append((x, y))
 
