@@ -17,7 +17,6 @@ def compressed_length(string, n):
     pattern = ""
     count = 0
 
-    i = 0
     for i in range(0, len(string), n):
         if pattern == string[i:i+n]: # 같음
             count += 1
