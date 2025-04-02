@@ -13,24 +13,21 @@ def doll_claw_machine(board, moves):
             queue.append(board[i][j])
         queues.append(queue)
 
-    print(queues)
 
     # moves 돌면서 해당 큐 popLeft, 바구니 stack peek()(=last)과 같으면 바구니 pop, 다르면 바구니에 append
     for move in moves:
         queue_num = move - 1
-        if queues[queue_num]:
-            doll = queues[queue_num].popleft()
-        else: continue
+        if not queues[queue_num]: # 비었으면 다음 move로 넘어감
+            continue
 
-        if bucket:
-            last_doll_in_bucket = bucket[len(bucket)-1]
-            if doll == last_doll_in_bucket:
-                bucket.pop()
-                num_removed += 2
-            else:
-                bucket.append(doll)
-        else:
-            bucket.append(doll)
+        picked_doll = queues[queue_num].popleft()
+        if bucket and bucket[-1] == picked_doll:
+            bucket.pop()
+            num_removed += 2
+            continue
+
+        # 다르거나 bucket 비었으면
+        bucket.append(picked_doll)
 
     return num_removed
 
