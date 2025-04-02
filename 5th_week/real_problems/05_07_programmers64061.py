@@ -1,6 +1,6 @@
 from collections import deque
 
-def doll_claw_machine(board, moves):
+def solution(board, moves):
     bucket = []
     num_removed = 0
 
@@ -28,9 +28,3 @@ def doll_claw_machine(board, moves):
             bucket.append(picked_doll)
 
     return num_removed
-
-
-board = [[0,0,0,0,0],[0,0,1,0,3],[0,2,5,0,1],[4,2,4,4,2],[3,5,1,3,1]]
-moves = [1,5,3,5,1,2,1,4]
-
-print("정답: 4, 결과:", doll_claw_machine(board, moves))
