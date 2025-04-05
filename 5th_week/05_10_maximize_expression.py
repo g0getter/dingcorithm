@@ -40,19 +40,13 @@ def maximize_expression(expression):
 # 배열 복사한 새로운 배열에서, 연산 후 길이 줄이고 이번 Loop 종료 -> 해당 연산자 존재하지 않을 때까지 반복 -> 모든 연산자에 대해 반복
 # -> 존재하는 연산자에 대해 반복(최대 3번)
 def calc(sorted_operators, expression):
-    print(sorted_operators)
-    print(expression)
     current_expression = expression
 
     for operator in sorted_operators:
-        print(operator, " time")
         while operator in current_expression: ## !!!!!. 이번 연산자가 더 이상 없으면 다음 연산자로 넘어가도록.
             i = current_expression.index(operator)
-            print("i", i)
-            print("[before]", current_expression)
             result = eval(f"{current_expression[i - 1]}{operator}{current_expression[i + 1]}")
             current_expression = current_expression[:i-1] + [str(result)] + current_expression[i+2:]
-            print("[after]", current_expression)
 
     return int(current_expression[0])
 
@@ -67,5 +61,5 @@ def regular_expression(string):
     return re.split('([^0-9])', string) # 매칭된 패턴(연산자)도 포함하기 위해 () 사용
 
 
-# print("정답 = 60420 / 현재 풀이 값 = ", maximize_expression("100-200*300-500+20"))
+print("정답 = 60420 / 현재 풀이 값 = ", maximize_expression("100-200*300-500+20"))
 print("정답 = 300 / 현재 풀이 값 = ", maximize_expression("50*6-3*2"))
