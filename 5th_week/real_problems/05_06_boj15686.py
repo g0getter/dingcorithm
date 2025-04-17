@@ -16,7 +16,7 @@ def get_min_city_chicken_distance(n, m, city_map):
 
     chickens_combinations = list(combinations(current_chickens, m))
 
-    min_city_chicken_distance = 2*n * 2*n # FIXME: 초기 최댓값 잘못 지정했었음. 최대 거리 * 최대 집 개수 = 2N * 2N
+    min_city_chicken_distance = sys.maxsize
 
     for chickens in chickens_combinations:
         min_city_chicken_distance = min(min_city_chicken_distance, get_chicken_distance_of_city(chickens, houses, n))
@@ -34,8 +34,7 @@ def get_chicken_distance_of_city(chickens, houses, n):
 # chickens가 치킨집들의 좌표일 때,
 # 집 하나의 치킨거리 (chickens: list임) [(x1, y1), ...( , ) ]
 def get_chicken_distance_of_house(x, y, chickens, n):
-    min_distance = 2*n
-    # print("min_distance", min_distance)
+    min_distance = sys.maxsize
     for xc, yc in chickens:
         min_distance = min(min_distance, get_distance(x, y, xc, yc))
 

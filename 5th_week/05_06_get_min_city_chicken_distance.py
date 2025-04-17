@@ -1,3 +1,4 @@
+import sys # maxsize 사용 위해.
 from itertools import combinations
 
 def get_min_city_chicken_distance(n, m, city_map):
@@ -16,7 +17,7 @@ def get_min_city_chicken_distance(n, m, city_map):
 
     chickens_combinations = list(combinations(current_chickens, m))
 
-    min_city_chicken_distance = 2*n * 2*n # (구)FIXME: 초기 최댓값 잘못 지정했었음. 최대 거리 * 최대 집 개수 = 2N * 2N
+    min_city_chicken_distance = sys.maxsize
 
     for chickens in chickens_combinations:
         min_city_chicken_distance = min(min_city_chicken_distance, get_chicken_distance_of_city(chickens, houses, n))
