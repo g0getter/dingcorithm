@@ -1,12 +1,11 @@
 from collections import deque
 
-
 def is_available_to_take_out_only_red_marble(game_map):
     queue = deque()
     m = len(game_map)
     n = len(game_map[0])
 
-    visited = [[[[False] * n for _ in range(m)] for _ in range(n)] for _ in range(n)]
+    visited = [[[[False] * n for _ in range(m)] for _ in range(n)] for _ in range(m)]
 
     # red, blue 초기 위치 찾기
     red_r, red_c, blue_r, blue_c = -1, -1, -1, -1
@@ -17,6 +16,7 @@ def is_available_to_take_out_only_red_marble(game_map):
             elif game_map[i][j] == "B":
                 blue_r, blue_c = i, j
     queue.append((red_r, red_c, blue_r, blue_c, 0)) # 현재 0번 이동했으므로 count = 0
+    visited[red_r][red_c][blue_r][blue_c] = True
 
     dr = [0,1,0,-1]
     dc = [1,0,-1,0]
