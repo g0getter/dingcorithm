@@ -30,13 +30,9 @@ def get_game_over_turn_count(horse_count, game_map, horse_location_and_direction
     for i, (r, c, d) in enumerate(horse_location_and_directions):
         current_stacked_horse_map[r][c].append(i)
 
-    # printMap(current_stacked_horse_map)
-
     #2
     turn_count = 1
     while turn_count <= 10:
-        # print("turn", turn_count)
-        # printMap(current_stacked_horse_map)
         for horse_num in range(horse_count): # e.g. 0, 1, 2, 3
             r, c, d = horse_location_and_directions[horse_num]
             next_r = r + dr[d]
@@ -49,9 +45,6 @@ def get_game_over_turn_count(horse_count, game_map, horse_location_and_direction
                     moving_horse_index_array = current_stacked_horse_map[r][c][i:]
                     current_stacked_horse_map[r][c] = current_stacked_horse_map[r][c][:i] # 기존 것 비움(제거)
                     break
-            # print("옮긴 말들:", moving_horse_index_array)
-
-
 
             # 옮기기 - 다음 칸 색깔에 따라
 
@@ -76,41 +69,24 @@ def get_game_over_turn_count(horse_count, game_map, horse_location_and_direction
                     current_stacked_horse_map[next_r][next_c] += moving_horse_index_array
                 elif game_map[next_r][next_c] == 1:  # 빨간색
                     current_stacked_horse_map[next_r][next_c] += list(reversed(moving_horse_index_array))
-                # current_stacked_horse_map[next_r][next_c] += moving_horse_index_array
 
-                # for horse in moving_horse_index_array:
-                #     # horse_location_and_directions[horse] = [next_r, next_c, next_d]
-                #     horse_location_and_directions[horse][0], horse_location_and_directions[horse][1] = next_r, next_c
-                # horse_location_and_directions[horse_num] = [next_r, next_c, next_d]
 
             # 흰색인 경우에는 그 칸으로 이동한다. 이동하려는 칸에 말이 이미 있는 경우에는 가장 위에 A번 말을 올려놓는다.
             elif game_map[next_r][next_c] == 0:
                 current_stacked_horse_map[next_r][next_c] += moving_horse_index_array
-                # horse_location_and_directions[horse_num] = [next_r, next_c, d]
-                # for horse in moving_horse_index_array:
-                #     # horse_location_and_directions[horse] = [next_r, next_c, d] # XXXXXX!
-                #     horse_location_and_directions[horse][0], horse_location_and_directions[horse][1] = next_r, next_c
 
             # 빨간색인 경우에는 이동한 후에 A번 말과 그 위에 있는 모든 말의 쌓여있는 순서를 반대로 바꾼다.
             # A, D, F, G가 이동하고, 이동하려는 칸에 말이 E, C, B로 있는 경우에는 E, C, B, G, F, D, A가 된다.
             elif game_map[next_r][next_c] == 1:
                 current_stacked_horse_map[next_r][next_c] += list(reversed(moving_horse_index_array)) # iterator -> list로 감쌈
-                # horse_location_and_directions[horse_num] = [next_r, next_c, d]
-
-                # for horse in moving_horse_index_array:
-                #     # horse_location_and_directions[horse] = [next_r, next_c, d] # XXXXXX!
-                #     horse_location_and_directions[horse][0], horse_location_and_directions[horse][1] = next_r, next_c
 
             # 이동: 공통 코드
             for horse in moving_horse_index_array:
                 # horse_location_and_directions[horse] = [next_r, next_c, d] # XXXXXX!
                 horse_location_and_directions[horse][0], horse_location_and_directions[horse][1] = next_r, next_c
 
-            # printMap(current_stacked_horse_map)
-            # print(horse_location_and_directions)
 
             # 상태 기록 업데이트
-            # horse_location_and_directions[i] # = [r, c, d]
 
             if len(current_stacked_horse_map[next_r][next_c]) >= 4:
                 return turn_count
@@ -124,7 +100,6 @@ def reversed_direction(d):
     else:
         return d-1
 
-# def move(horse_num, )
 def printMap(horse_map):
     for arr in horse_map:
         print(arr)
@@ -138,7 +113,7 @@ start_horse_location_and_directions = [
     [0, 2, 0],
     [2, 2, 2]
 ]
-# print("정답 = 9 / 현재 풀이 값 = ", get_game_over_turn_count(k, chess_map, start_horse_location_and_directions))
+print("정답 = 9 / 현재 풀이 값 = ", get_game_over_turn_count(k, chess_map, start_horse_location_and_directions))
 
 start_horse_location_and_directions = [
     [0, 1, 0],
@@ -146,7 +121,7 @@ start_horse_location_and_directions = [
     [0, 1, 0],
     [2, 1, 2]
 ]
-# print("정답 = 3 / 현재 풀이 값 = ", get_game_over_turn_count(k, chess_map, start_horse_location_and_directions))
+print("정답 = 3 / 현재 풀이 값 = ", get_game_over_turn_count(k, chess_map, start_horse_location_and_directions))
 chess_map = [
     [0, 1, 2, 0, 1, 1],
     [1, 2, 0, 1, 1, 0],
@@ -174,28 +149,3 @@ for r, c, d in start_horse_location_and_directions1:
     nd = d - 1
     start_horse_location_and_directions2.append([nr, nc, nd])
 print("정답 = 7 / 현재 풀이 값 = ", get_game_over_turn_count(10, chess_map, start_horse_location_and_directions2))
-# import sys
-# # ---------------------- 입력 처리 ----------------------
-# raw_input = sys.stdin.read().split()
-# idx = 0
-# n = int(raw_input[idx])
-# idx += 1
-# k = int(raw_input[idx])
-# idx += 1
-#
-# game_map = []
-# for _ in range(n):
-#     row = list(map(int, raw_input[idx:idx+n]))
-#     idx += n
-#     game_map.append(row)
-#
-# start_horse_location_and_directions = []
-# for _ in range(k):
-#     r = int(raw_input[idx]) - 1
-#     c = int(raw_input[idx+1]) - 1
-#     d = int(raw_input[idx+2]) - 1
-#     idx += 3
-#     start_horse_location_and_directions.append([r, c, d])
-#
-# # ---------------------- 결과 출력 ----------------------
-# print(get_game_over_turn_count(k, game_map, start_horse_location_and_directions))
